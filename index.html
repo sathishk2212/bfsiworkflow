@@ -226,7 +226,7 @@ h3{font-size:var(--fs-h3)}
 .ph{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;width:100%;height:100%;min-height:120px;padding:18px;border:1.5px dashed var(--blue);border-radius:18px;background:var(--beige-45);color:var(--blue)}
 .ph b{font-size:var(--fs-label);font-weight:var(--fw-medium);letter-spacing:.02em}
 .ph span{font-size:12px;line-height:1.45;opacity:.85;max-width:34ch}
-.ph.has-img{border:0;background:none;padding:0;min-height:0}
+.ph.has-img,.ph.on-dark.has-img{border:0;background:none;padding:0;min-height:0}
 .ph img{width:100%;height:100%;object-fit:contain;display:block}
 .ph .fn{font-size:11px;font-weight:var(--fw-medium);opacity:1;background:rgba(78,58,173,.1);padding:3px 8px;border-radius:6px;margin-top:2px}
 .ph.on-dark .fn{background:rgba(255,255,255,.12)}
@@ -363,6 +363,7 @@ b.k{font-weight:var(--fw-medium)}
 
 /* ===== CTA ===== */
 .cta-band{position:relative;background:var(--black);color:#fff;border-radius:32px;overflow:hidden;padding:clamp(36px,5vw,72px)}
+.cta-band .art .ph,.cta-band .art .ph.has-img{border-radius:0}
 .cta-band .art{position:absolute;right:clamp(20px,3vw,40px);top:clamp(20px,3vw,40px);bottom:clamp(20px,3vw,40px);width:36%}
 .cta-inner{position:relative;z-index:2;max-width:560px}
 .cta-inner h2{margin:16px 0 14px}
