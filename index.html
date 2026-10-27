@@ -366,25 +366,76 @@ b.k{font-weight:var(--fw-medium)}
 @media(max-width:860px){.steps{grid-template-columns:1fr}.step{border-right:0;border-bottom:1px solid var(--ink-12);padding-left:0}.step:last-child{border-bottom:0}}
 
 /* ===== CTA ===== */
-.cta-band{position:relative;background:var(--black);color:#fff;border-radius:32px;overflow:hidden;padding:clamp(36px,5vw,72px)}
-.cta-band .art .ph,.cta-band .art .ph.has-img{border-radius:0}
-.cta-band .art{position:absolute;right:clamp(20px,3vw,40px);top:clamp(20px,3vw,40px);bottom:clamp(20px,3vw,40px);width:36%}
+.cta-band{position:relative;background:var(--black);color:#fff;border-radius:32px;overflow:hidden;padding:clamp(36px,5vw,72px);
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(28px,4vw,64px);align-items:center}
 .cta-inner{position:relative;z-index:2;max-width:560px}
 .cta-inner h2{margin:16px 0 14px}
 .cta-inner p.d{color:rgba(255,255,255,.7);max-width:52ch}
 .cta-band .eyebrow{background:rgba(255,255,255,.1);color:#fff}
 .agenda{margin-top:30px;display:grid;gap:10px}
 .agenda label{font-size:var(--fs-label);font-weight:var(--fw-medium);color:rgba(255,255,255,.7)}
-.agenda select{font-family:inherit;font-size:15px;font-weight:var(--fw-medium);width:100%;max-width:420px;padding:14px 18px;border-radius:14px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#fff;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='8' fill='none'%3E%3Cpath d='M1 1l6 6 6-6' stroke='white' stroke-width='1.6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 18px center}
+.agenda select{font-family:inherit;font-size:15px;font-weight:var(--fw-medium);width:100%;max-width:420px;padding:14px 18px;border-radius:14px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#fff;appearance:none;-webkit-appearance:none;cursor:pointer;transition:border-color .25s,background-color .25s;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='8' fill='none'%3E%3Cpath d='M1 1l6 6 6-6' stroke='white' stroke-width='1.6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 18px center}
+.agenda select:hover{border-color:var(--lilac)}
 .agenda select option{color:var(--black)}
-.agenda .row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:6px}
-.agenda .done{font-size:var(--fs-label);color:var(--lilac);min-height:20px}
+.cta-band.form-open .agenda select{border-color:var(--lilac);background-color:rgba(176,168,254,.14)}
 .fine{font-size:var(--fs-label);color:rgba(255,255,255,.55);max-width:52ch;margin-top:6px}
-@media(max-width:900px){.cta-band .art{display:none}}
+
+/* right column: the image is replaced by the form once a priority is chosen */
+.cta-stage{position:relative;min-height:clamp(300px,32vw,440px)}
+.cta-band .art{position:absolute;inset:0;transition:opacity .45s var(--ease),transform .6s var(--ease)}
+.cta-band .art .ph,.cta-band .art .ph.has-img{border-radius:0}
+.cta-band.form-open .art{opacity:0;transform:scale(.97);pointer-events:none}
+
+.cta-form{position:relative;z-index:3;color:#fff;animation:formIn .6s var(--ease) both}
+@keyframes formIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.f-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.cta-form .eyebrow{background:rgba(255,255,255,.1);color:#fff}
+.f-close{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:rgba(255,255,255,.6);transition:background .2s,color .2s}
+.f-close:hover{background:rgba(255,255,255,.1);color:#fff}
+.f-close svg{width:14px;height:14px}
+.f-title{font-size:var(--fs-h3);font-weight:var(--fw-medium);letter-spacing:var(--ls-head);line-height:1.15;margin:16px 0 6px;color:#fff}
+.f-sub{font-size:var(--fs-small);color:rgba(255,255,255,.62);margin-bottom:22px}
+.f-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.fld{display:flex;flex-direction:column;gap:7px;min-width:0}
+.fld.full{grid-column:1/-1}
+.fld label{font-size:var(--fs-label);font-weight:var(--fw-medium);color:rgba(255,255,255,.7)}
+.fld label .req{color:var(--coral);margin-left:2px}
+.fld input,.fld textarea{font-family:inherit;font-size:16px;letter-spacing:inherit;color:#fff;width:100%;padding:13px 16px;border-radius:14px;
+  border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);transition:border-color .2s,box-shadow .2s,background .2s}
+.fld textarea{resize:vertical;min-height:170px;line-height:1.5}
+.fld input:hover,.fld textarea:hover{border-color:var(--lilac)}
+.fld input:focus,.fld textarea:focus{outline:none;border-color:var(--lilac);background:rgba(176,168,254,.14);box-shadow:0 0 0 4px rgba(176,168,254,.18)}
+.fld input:-webkit-autofill{-webkit-text-fill-color:#fff;-webkit-box-shadow:0 0 0 40px #2a2840 inset;caret-color:#fff}
+.fld input[aria-invalid="true"]{border-color:var(--coral);box-shadow:0 0 0 4px rgba(238,111,118,.18)}
+.f-err{font-size:var(--fs-label);color:var(--coral)}
+.fld textarea.flash{animation:fillFlash 1.2s var(--ease)}
+@keyframes fillFlash{0%{background:rgba(176,168,254,.35);border-color:var(--lilac)}100%{background:rgba(255,255,255,.08)}}
+.hp{position:absolute!important;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none}
+.f-foot{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:20px;flex-wrap:wrap}
+.f-status{font-size:var(--fs-label);color:rgba(255,255,255,.6);flex:1;min-width:140px}
+.f-status.err{color:var(--coral)}
+.btn:disabled{opacity:.6;cursor:progress;transform:none}
+.btn-ghost{border:1px solid rgba(255,255,255,.3);color:#fff}
+.btn-ghost:hover{border-color:var(--lilac);color:var(--lilac)}
+.f-done{padding:clamp(8px,2vw,20px) 0}
+.f-done .tick{width:52px;height:52px;border-radius:50%;background:rgba(176,168,254,.18);border:1px solid var(--lilac);display:grid;place-items:center;margin-bottom:18px}
+.f-done .tick svg{width:22px;height:22px;stroke:var(--lilac)}
+.f-done h3{font-size:var(--fs-h3);font-weight:var(--fw-medium);letter-spacing:var(--ls-head);margin-bottom:8px;color:#fff}
+.f-done p{font-size:var(--fs-small);color:rgba(255,255,255,.65);max-width:42ch;margin-bottom:22px}
+
+@media(max-width:900px){
+  .cta-band{grid-template-columns:1fr;align-items:start}
+  .cta-band .art{display:none}
+  .cta-stage{min-height:0}
+  .cta-band:not(.form-open) .cta-stage{display:none}
+}
+@media(max-width:560px){.f-grid{grid-template-columns:1fr}.f-foot .btn{width:100%;justify-content:center}}
 
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .fade{opacity:1;transform:none;transition:none}
+  .cta-form,.fld textarea.flash{animation:none}
+  .cta-band .art{transition:none}
 }
 
 </style>
@@ -753,8 +804,7 @@ b.k{font-weight:var(--fw-medium)}
 <!-- ================= CTA ================= -->
 <section class="sx s" id="start">
   <div class="wrap">
-    <div class="cta-band fade">
-      <div class="art"><div class="ph on-dark" data-img="cta-visual"><b>PLACEHOLDER · CTA visual</b><span>1200×800 WebP/PNG (like BloomFi's cta-bars-2x.webp). Idea: rising bars or soft gradient shapes in Lilac, Red and Beige on Black.</span></div></div>
+    <div class="cta-band fade" id="ctaBand">
       <div class="cta-inner">
         <span class="eyebrow"><i></i>Your first modernization priority</span>
         <h2>Start with your modernization priority.</h2>
@@ -762,6 +812,7 @@ b.k{font-weight:var(--fw-medium)}
         <div class="agenda">
           <label for="prio">What would you like to address?</label>
           <select id="prio">
+            <option value="" disabled selected>Select your priority…</option>
             <option>Modernize a critical application</option>
             <option>Connect systems and digital channels</option>
             <option>Modernize merger and account workflows</option>
@@ -770,12 +821,67 @@ b.k{font-weight:var(--fw-medium)}
             <option>Build a trusted data foundation</option>
             <option>Assess a governed AI use case</option>
           </select>
-          <div class="row">
-            <button class="btn btn-light" id="copyBtn">Copy discussion agenda
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 8h12M9 3l5 5-5 5"/></svg></button>
-            <span class="done" id="copyDone"></span>
+          <p class="fine">Your selection becomes a discussion agenda in the message, ready to send to your Tezo contact. Any assessment scope, deliverables, timing and fees are agreed separately.</p>
+        </div>
+      </div>
+
+      <div class="cta-stage">
+        <div class="art"><div class="ph on-dark" data-img="cta-visual"><b>PLACEHOLDER · CTA visual</b><span>1200×800 WebP/PNG (like BloomFi's cta-bars-2x.webp). Idea: rising bars or soft gradient shapes in Lilac, Red and Beige on Black.</span></div></div>
+
+        <div class="cta-form" id="ctaForm" hidden>
+          <form id="leadForm" novalidate
+                data-portal-id="242046967"
+                data-form-id="fd6e9cea-4da5-4a44-95dc-075b8a3f75f6"
+                data-region="na1">
+            <div class="f-head">
+              <span class="eyebrow"><i></i>Start the conversation</span>
+              <button type="button" class="f-close" id="formClose" aria-label="Close form and return">
+                <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M2 2l10 10M12 2L2 12"/></svg>
+              </button>
+            </div>
+            <h3 class="f-title">Share a few details</h3>
+            <p class="f-sub">We've added your priority to the message below. Edit it however you like.</p>
+
+            <div class="f-grid">
+              <div class="fld">
+                <label for="f-firstname">First Name</label>
+                <input id="f-firstname" name="firstname" type="text" autocomplete="given-name">
+              </div>
+              <div class="fld">
+                <label for="f-company">Company Name</label>
+                <input id="f-company" name="company" type="text" autocomplete="organization">
+              </div>
+              <div class="fld full">
+                <label for="f-email">Work Email<span class="req" aria-hidden="true">*</span></label>
+                <input id="f-email" name="email" type="email" autocomplete="email" placeholder="name@company.com" required aria-describedby="f-email-err">
+                <span class="f-err" id="f-email-err" role="alert"></span>
+              </div>
+              <div class="fld full">
+                <label for="f-message">Message</label>
+                <textarea id="f-message" name="message" rows="8"></textarea>
+              </div>
+            </div>
+
+            <!-- UTM tracking: filled automatically from the page URL (persisted for the session) -->
+            <input type="hidden" name="utm_source">
+            <input type="hidden" name="utm_medium">
+            <input type="hidden" name="utm_campaign">
+            <!-- spam honeypot (not sent to HubSpot) -->
+            <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+            <div class="f-foot">
+              <span class="f-status" id="formStatus" role="status" aria-live="polite"></span>
+              <button class="btn btn-light" type="submit" id="formSubmit">Submit
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 8h12M9 3l5 5-5 5"/></svg></button>
+            </div>
+          </form>
+
+          <div class="f-done" id="formDone" hidden>
+            <div class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+            <h3>Thank you. We've got it.</h3>
+            <p>Your discussion agenda has been sent. A Tezo contact will follow up on your priority.</p>
+            <button type="button" class="btn btn-ghost" id="formAgain">Send another priority</button>
           </div>
-          <p class="fine">Use the brief as a discussion agenda with your Tezo contact. Any assessment scope, deliverables, timing and fees are agreed separately.</p>
         </div>
       </div>
     </div>
@@ -1016,14 +1122,114 @@ b.k{font-weight:var(--fw-medium)}
     })});
   });
 
-  /* ---------- Copy agenda ---------- */
-  document.getElementById('copyBtn').addEventListener('click',function(){
-    var pr=document.getElementById('prio').value;
-    var txt='Tezo discussion agenda\n\nPriority: '+pr+'\n\n1. The workflow, current constraints and the people involved\n2. Systems and dependencies in scope\n3. Whether a focused assessment would help (scope, deliverables, timing and fees agreed separately)';
-    var d=document.getElementById('copyDone');
-    function ok(){d.textContent='Copied. Share it with your Tezo contact.'}
-    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(ok,function(){d.textContent='Copy failed. Please select the text manually.'})}
-    else{var ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');ok()}catch(e){d.textContent='Copy failed.'}document.body.removeChild(ta)}
+  /* ---------- Priority -> branded HubSpot form (replaces the old "Copy discussion agenda") ---------- */
+  var HS_TRACKING=true;   /* loads HubSpot's tracking script so submissions are tied to the visitor's session; set false to disable */
+  var band=document.getElementById('ctaBand'),sel=document.getElementById('prio'),
+      panel=document.getElementById('ctaForm'),form=document.getElementById('leadForm'),
+      msg=document.getElementById('f-message'),statusEl=document.getElementById('formStatus'),
+      done=document.getElementById('formDone'),submitBtn=document.getElementById('formSubmit'),
+      emailEl=document.getElementById('f-email'),emailErr=document.getElementById('f-email-err'),
+      dirty=false;
+
+  var PORTAL=form.getAttribute('data-portal-id'),FORM_ID=form.getAttribute('data-form-id'),
+      REGION=(form.getAttribute('data-region')||'na1').toLowerCase();
+  var API=(REGION==='na1'?'https://api.hsforms.com':'https://api-'+REGION+'.hsforms.com')+
+          '/submissions/v3/integration/submit/'+PORTAL+'/'+FORM_ID;
+
+  if(HS_TRACKING){var hs=document.createElement('script');hs.src='https://js.hs-scripts.com/'+PORTAL+'.js';hs.async=true;hs.defer=true;document.body.appendChild(hs)}
+
+  /* UTM capture: read from the URL on load, keep for the session so they survive in-page navigation */
+  var UTM=['utm_source','utm_medium','utm_campaign'],mem={};
+  (function(){
+    var qs;try{qs=new URLSearchParams(location.search)}catch(e){return}
+    UTM.forEach(function(k){
+      var v=qs.get(k);if(!v)return;v=v.slice(0,255);mem[k]=v;
+      try{sessionStorage.setItem(k,v)}catch(e){}
+    });
+  })();
+  function utmVal(k){var v='';try{v=sessionStorage.getItem(k)||''}catch(e){}return v||mem[k]||''}
+  function fillUtm(){UTM.forEach(function(k){form.elements[k].value=utmVal(k)})}
+
+  function agenda(pr){
+    return 'Tezo discussion agenda\n\nPriority: '+pr+'\n\n1. The workflow, current constraints and the people involved\n2. Systems and dependencies in scope\n3. Whether a focused assessment would help (scope, deliverables, timing and fees agreed separately)';
+  }
+  function flash(el){el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash')}
+  function setStatus(t,err){statusEl.textContent=t||'';statusEl.className='f-status'+(err?' err':'')}
+  function clearEmailError(){emailErr.textContent='';emailEl.removeAttribute('aria-invalid')}
+
+  function openForm(){
+    var wasOpen=band.classList.contains('form-open');
+    band.classList.add('form-open');panel.hidden=false;
+    if(!wasOpen){
+      fillUtm();
+      if(window.matchMedia('(max-width:900px)').matches){
+        setTimeout(function(){panel.scrollIntoView({behavior:'smooth',block:'nearest'})},60);
+      }
+    }
+  }
+  function closeForm(){band.classList.remove('form-open');panel.hidden=true;sel.selectedIndex=0}
+  function resetForm(){
+    form.reset();dirty=false;clearEmailError();setStatus('');
+    form.hidden=false;done.hidden=true;submitBtn.disabled=false;
+  }
+
+  sel.addEventListener('change',function(){
+    var pr=sel.value;if(!pr)return;
+    if(!done.hidden)resetForm();
+    if(!dirty||!msg.value.trim()){msg.value=agenda(pr);dirty=false}
+    else{msg.value=msg.value.replace(/^Priority: .*$/m,function(){return 'Priority: '+pr})}   /* keep the visitor's edits, just update the priority line */
+    flash(msg);openForm();
+  });
+  msg.addEventListener('input',function(){dirty=true});
+  emailEl.addEventListener('input',clearEmailError);
+  document.getElementById('formClose').addEventListener('click',function(){closeForm();sel.focus()});
+  document.getElementById('formAgain').addEventListener('click',function(){resetForm();closeForm();sel.focus()});
+
+  /* Company emails only: block personal / free / disposable mailbox providers */
+  var EMAIL_RE=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  var FREE_MAIL=('gmail.com googlemail.com yahoo.com yahoo.co.in yahoo.co.uk yahoo.in yahoo.fr yahoo.de yahoo.es yahoo.it yahoo.com.br yahoo.com.au yahoo.ca ymail.com rocketmail.com '+
+    'hotmail.com hotmail.co.uk hotmail.fr hotmail.de hotmail.it hotmail.es outlook.com outlook.in live.com live.co.uk live.in msn.com windowslive.com passport.com '+
+    'icloud.com me.com mac.com aol.com aim.com proton.me protonmail.com protonmail.ch pm.me tutanota.com tuta.io tutamail.com zoho.com zohomail.com zoho.in '+
+    'gmx.com gmx.net gmx.de gmx.us mail.com email.com usa.com post.com yandex.com yandex.ru ya.ru mail.ru inbox.ru list.ru bk.ru rambler.ru '+
+    'qq.com 163.com 126.com sina.com sohu.com foxmail.com naver.com daum.net hanmail.net web.de t-online.de freenet.de orange.fr wanadoo.fr free.fr laposte.net sfr.fr '+
+    'rediffmail.com rediff.com sify.com in.com indiatimes.com fastmail.com fastmail.fm hushmail.com mailfence.com runbox.com '+
+    'comcast.net verizon.net att.net sbcglobal.net bellsouth.net cox.net charter.net earthlink.net optonline.net btinternet.com sky.com virginmedia.com '+
+    'mailinator.com guerrillamail.com guerrillamail.net sharklasers.com 10minutemail.com temp-mail.org tempmail.com throwawaymail.com yopmail.com trashmail.com getnada.com dispostable.com maildrop.cc').split(' ');
+  function emailProblem(v){
+    v=(v||'').trim().toLowerCase();
+    if(!EMAIL_RE.test(v))return 'Please enter a valid email address.';
+    var d=v.split('@')[1];
+    for(var i=0;i<FREE_MAIL.length;i++){if(d===FREE_MAIL[i]||d.slice(-FREE_MAIL[i].length-1)==='.'+FREE_MAIL[i])return 'Please use your company email address. Personal addresses like Gmail or Yahoo aren\u2019t accepted.'}
+    return '';
+  }
+  function checkEmail(focus){
+    var p=emailProblem(emailEl.value);
+    if(p){emailErr.textContent=p;emailEl.setAttribute('aria-invalid','true');if(focus)emailEl.focus();return false}
+    clearEmailError();return true;
+  }
+  emailEl.addEventListener('blur',function(){if(emailEl.value.trim())checkEmail(false)});
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(form.elements.website.value)return;   /* honeypot tripped: silently drop */
+    if(!checkEmail(true))return;
+    fillUtm();
+    var fields=[];
+    ['firstname','company','email','message','utm_source','utm_medium','utm_campaign'].forEach(function(n){
+      var v=(form.elements[n].value||'').trim();
+      if(v||n==='email')fields.push({name:n,value:v});
+    });
+    var ck=document.cookie.match(/(?:^|;\s*)hubspotutk=([^;]+)/);
+    var payload={submittedAt:Date.now(),fields:fields,context:{pageUri:location.href,pageName:document.title}};
+    if(ck)payload.context.hutk=ck[1];
+
+    submitBtn.disabled=true;setStatus('Sending…');
+    fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
+      .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json().catch(function(){return {}})})
+      .then(function(){
+        setStatus('');form.hidden=true;done.hidden=false;
+        if(window.dataLayer)window.dataLayer.push({event:'tezo_form_submit',priority:sel.value});
+      })
+      .catch(function(){setStatus('Something went wrong. Please try again in a moment.',true);submitBtn.disabled=false});
   });
 })();
 
