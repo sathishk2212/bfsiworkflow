@@ -258,6 +258,10 @@ h3{font-size:var(--fs-h3)}
 .progress i{display:block;height:100%;width:0;background:var(--blue)}
 
 /* ===== Section heads ===== */
+#capabilities .sec-head{max-width:none}
+.one-line{white-space:nowrap;font-size:clamp(15px,2.55vw,36px)}
+.hl{background:var(--lilac-25);color:var(--blue);padding:.02em .22em;border-radius:.22em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+@media(max-width:720px){.one-line{white-space:normal;font-size:var(--fs-h2)}}
 section.s{padding:clamp(64px,8vw,112px) 0}
 .sec-head{display:flex;flex-direction:column;align-items:flex-start;gap:18px;margin-bottom:clamp(32px,4vw,52px);max-width:760px}
 .fade{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
@@ -534,7 +538,7 @@ b.k{font-weight:var(--fw-medium)}
   <div class="wrap">
     <div class="sec-head fade">
       <span class="eyebrow"><i></i>Capabilities</span>
-      <h2>Product Engineering at the core. Data Engineering alongside it.</h2>
+      <h2 class="one-line"><mark class="hl">Product Engineering</mark> at the core. <mark class="hl">Data Engineering</mark> alongside it.</h2>
     </div>
     <div class="cap-grid">
       <article class="cap fade" style="background:var(--blue);color:#fff">
@@ -560,7 +564,7 @@ b.k{font-weight:var(--fw-medium)}
         </dl>
       </article>
       <article class="cap cap-ai fade">
-        <div class="ph" data-img="ai-icon"><b>PLACEHOLDER · AI icon</b><span>256×256 SVG</span></div>
+        <div class="ph" data-img="ai-icon" data-ext="gif"><b>PLACEHOLDER · AI icon</b><span>256×256 GIF</span></div>
         <div>
           <h3>Where AI contributes</h3>
           <p>Customer and agent assistance, knowledge retrieval and workflow automation, connected to the applications and data they need. Evaluation, access controls and human escalation are part of the design.</p>
@@ -574,7 +578,7 @@ b.k{font-weight:var(--fw-medium)}
 <section class="sx s" id="evidence">
   <div class="wrap">
     <div class="sec-head fade">
-      <span class="eyebrow"><i></i>Client work</span>
+      <span class="eyebrow"><i></i>The proof</span>
       <h2>Case studies.</h2>
     </div>
     <div class="filters fade" data-for="cases">
@@ -964,21 +968,21 @@ b.k{font-weight:var(--fw-medium)}
   onScroll();
 
   /* ---------- Placeholders: drop images/<name>.svg|webp|png|jpg and it replaces the box ---------- */
-  var EXTS=['svg','webp','png','jpg','jpeg'];
+  var EXTS=['svg','webp','png','gif','jpg','jpeg'];
   function loadInto(el){
     var name=el.getAttribute('data-img');if(!name)return;
     if(el.classList.contains('ph')){
       var f=document.createElement('span');f.className='fn';
-      f.textContent='images/'+name+'.svg (or .webp / .png / .jpg)';
+      f.textContent='images/'+name+'.'+(el.getAttribute('data-ext')||'svg (or .webp / .png / .jpg)');
       el.appendChild(f);
     }
-    var i=0;
+    var i=0,list=el.getAttribute('data-ext')?[el.getAttribute('data-ext')]:EXTS;
     (function next(){
-      if(i>=EXTS.length)return;
+      if(i>=list.length)return;
       var im=new Image();
       im.onload=function(){el.classList.add('has-img');el.innerHTML='';im.alt='';el.appendChild(im)};
       im.onerror=next;
-      im.src='images/'+name+'.'+EXTS[i++];
+      im.src='images/'+name+'.'+list[i++];
     })();
   }
   document.querySelectorAll('[data-img]').forEach(loadInto);
