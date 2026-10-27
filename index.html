@@ -223,14 +223,14 @@ h3{font-size:var(--fs-h3)}
 .sx.end::before,.sx.end::after{top:0}
 
 /* ===== Placeholders (swap with your own assets) ===== */
-.ph{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;width:100%;height:100%;min-height:120px;padding:18px;border:1.5px dashed var(--blue);border-radius:18px;background:var(--beige-45);color:var(--blue)}
+.ph{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;width:100%;height:100%;min-height:120px;padding:18px;border:0;border-radius:18px;background:none;color:transparent}
 .ph b{font-size:var(--fs-label);font-weight:var(--fw-medium);letter-spacing:.02em}
 .ph span{font-size:12px;line-height:1.45;opacity:.85;max-width:34ch}
 .ph.has-img,.ph.on-dark.has-img{border:0;background:none;padding:0;min-height:0}
 .ph img{width:100%;height:100%;object-fit:contain;display:block}
 .ph .fn{font-size:11px;font-weight:var(--fw-medium);opacity:1;background:rgba(78,58,173,.1);padding:3px 8px;border-radius:6px;margin-top:2px}
 .ph.on-dark .fn{background:rgba(255,255,255,.12)}
-.ph.on-dark{background:rgba(255,255,255,.08);border-color:var(--lilac);color:var(--lilac)}
+.ph.on-dark{background:none;border:0;color:transparent}
 
 /* ===== Scroll statement ===== */
 .statement{position:relative;height:300vh}
@@ -258,7 +258,7 @@ h3{font-size:var(--fs-h3)}
 .progress i{display:block;height:100%;width:0;background:var(--blue)}
 
 /* ===== Section heads ===== */
-#capabilities .sec-head{max-width:none}
+#capabilities .sec-head,#approach .sec-head{max-width:none}
 .one-line{white-space:nowrap;font-size:clamp(15px,2.55vw,36px)}
 .hl{background:var(--lilac-25);color:var(--blue);padding:.02em .22em;border-radius:.22em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 @media(max-width:720px){.one-line{white-space:normal;font-size:var(--fs-h2)}}
@@ -353,17 +353,41 @@ b.k{font-weight:var(--fw-medium)}
 @media(max-width:860px){.why{grid-template-columns:1fr}.why .card{min-height:0}}
 
 /* ===== Approach ===== */
-.steps{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--ink-12)}
-.step{padding:30px clamp(0px,2.4vw,32px) 36px 0;border-right:1px solid var(--ink-12);padding-left:clamp(0px,2.4vw,32px)}
+.steps{--sp:clamp(0px,2.4vw,32px);display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--ink-12)}
+.step{position:relative;padding:30px var(--sp) 36px;border-right:1px solid var(--ink-12)}
 .step:first-child{padding-left:0}
-.step:last-child{border-right:0}
-.step .n{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--blue);color:#fff;font-weight:var(--fw-medium);font-size:var(--fs-label)}
+.step:last-child{border-right:0;padding-right:0}
+/* number row: 01 ---- (>) ---- 02 ---- (>) ---- 03 forms one continuous flow */
+.step-top{display:flex;align-items:center;gap:12px}
+.step .n{flex:none;display:inline-grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--blue);color:#fff;font-weight:var(--fw-medium);font-size:var(--fs-label);box-shadow:0 0 0 5px var(--blue-08)}
+.step .track{flex:1;border-top:2px dashed var(--lilac);height:0}
+.step:not(:last-child) .step-top{margin-right:calc(-1*var(--sp))}
+.step:not(:first-child) .step-top{margin-left:calc(-1*var(--sp))}
+.step:not(:first-child) .step-top::before{content:"";flex:0 0 calc(var(--sp) - 12px);border-top:2px dashed var(--lilac)}
+.step:last-child .track{display:none}
+/* arrow badge sitting on the separator line between two steps */
+.step:not(:last-child)::after{content:"";position:absolute;z-index:2;top:calc(30px + 19px - 15px);right:-15px;width:30px;height:30px;border-radius:50%;
+  background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' stroke='%234e3aad' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 7h10M8 3l4 4-4 4'/%3E%3C/svg%3E") center/14px no-repeat;
+  border:1.5px solid var(--lilac);transition:transform .3s var(--ease),border-color .3s}
+.step:not(:last-child):hover::after{transform:translateX(3px);border-color:var(--blue)}
 .step h3{margin:20px 0 10px}
 .step p{color:var(--ink-60);font-size:var(--fs-body)}
 .outputs{margin-top:30px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 .outputs b{font-size:var(--fs-small);font-weight:var(--fw-medium);margin-right:10px}
-.chip{font-size:var(--fs-label);font-weight:var(--fw-medium);padding:8px 14px;border-radius:99px;background:var(--beige-45)}
-@media(max-width:860px){.steps{grid-template-columns:1fr}.step{border-right:0;border-bottom:1px solid var(--ink-12);padding-left:0}.step:last-child{border-bottom:0}}
+/* checklist pills */
+.chip{display:inline-flex;align-items:center;gap:9px;font-size:var(--fs-label);font-weight:var(--fw-medium);padding:8px 16px 8px 10px;border-radius:99px;background:var(--beige-45)}
+.chip::before{content:"";flex:none;width:18px;height:18px;border-radius:6px;background:var(--blue) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.5 6.5l2.5 2.5 4.5-5'/%3E%3C/svg%3E") center/12px no-repeat;transform:scale(.4);opacity:0;transition:transform .45s var(--ease),opacity .3s}
+.outputs.in .chip::before{transform:none;opacity:1}
+.outputs.in .chip:nth-of-type(1)::before{transition-delay:.35s}.outputs.in .chip:nth-of-type(2)::before{transition-delay:.5s}.outputs.in .chip:nth-of-type(3)::before{transition-delay:.65s}.outputs.in .chip:nth-of-type(4)::before{transition-delay:.8s}.outputs.in .chip:nth-of-type(5)::before{transition-delay:.95s}
+@media(max-width:860px){
+  .steps{grid-template-columns:1fr}
+  .step,.step:first-child,.step:last-child{border-right:0;border-bottom:1px solid var(--ink-12);padding-left:0;padding-right:0}
+  .step:last-child{border-bottom:0}
+  .step .track,.step-top::before{display:none}
+  .step:not(:last-child) .step-top,.step:not(:first-child) .step-top{margin:0}
+  .step:not(:last-child)::after{top:auto;right:auto;left:0;bottom:-15px;transform:rotate(90deg)}
+  .step:not(:last-child):hover::after{transform:rotate(90deg) translateX(3px)}
+}
 
 /* ===== CTA ===== */
 .cta-band{position:relative;background:var(--black);color:#fff;border-radius:32px;overflow:hidden;padding:clamp(36px,5vw,72px);
@@ -415,13 +439,14 @@ b.k{font-weight:var(--fw-medium)}
 .f-status{font-size:var(--fs-label);color:rgba(255,255,255,.6);flex:1;min-width:140px}
 .f-status.err{color:var(--coral)}
 .btn:disabled{opacity:.6;cursor:progress;transform:none}
-.btn-ghost{border:1px solid rgba(255,255,255,.3);color:#fff}
-.btn-ghost:hover{border-color:var(--lilac);color:var(--lilac)}
 .f-done{padding:clamp(8px,2vw,20px) 0}
 .f-done .tick{width:52px;height:52px;border-radius:50%;background:rgba(176,168,254,.18);border:1px solid var(--lilac);display:grid;place-items:center;margin-bottom:18px}
 .f-done .tick svg{width:22px;height:22px;stroke:var(--lilac)}
 .f-done h3{font-size:var(--fs-h3);font-weight:var(--fw-medium);letter-spacing:var(--ls-head);margin-bottom:8px;color:#fff}
-.f-done p{font-size:var(--fs-small);color:rgba(255,255,255,.65);max-width:42ch;margin-bottom:22px}
+.f-done p{font-size:var(--fs-small);color:rgba(255,255,255,.65);max-width:44ch;margin-bottom:26px}
+.done-ref{display:inline-block;font-size:var(--fs-label);font-weight:var(--fw-medium);color:var(--lilac);background:rgba(176,168,254,.14);padding:6px 12px;border-radius:99px;margin-bottom:14px}
+.done-ref:empty{display:none}
+.done-sign{font-size:var(--fs-h3);font-weight:var(--fw-medium);letter-spacing:var(--ls-head);color:var(--lilac);padding-top:22px;border-top:1px solid rgba(255,255,255,.15)}
 
 @media(max-width:900px){
   .cta-band{grid-template-columns:1fr;align-items:start}
@@ -540,7 +565,7 @@ b.k{font-weight:var(--fw-medium)}
           <li>Set acceptance measures, rollout and rollback plans for the first release.</li>
         </ul>
       </div>
-      <div class="card lilac art"><div class="ph" data-img="persona-cio"><b>PLACEHOLDER · CIO / CTO art</b><span>800×800 SVG or transparent PNG. Idea: connected system blocks (apps, APIs, releases) joined by a dotted path. Tezo palette only.</span></div></div>
+      <div class="card lilac art"><div class="ph" data-img="persona-cio"></div></div>
     </div>
 
     <div class="persona fade" data-p="1">
@@ -553,7 +578,7 @@ b.k{font-weight:var(--fw-medium)}
           <li>Build transition, service coverage and human escalation into the delivery plan.</li>
         </ul>
       </div>
-      <div class="card lilac art"><div class="ph" data-img="persona-coo"><b>PLACEHOLDER · COO / Operations art</b><span>800×800 SVG or transparent PNG. Idea: a bank card or account tile with a workflow arrow. Tezo palette only.</span></div></div>
+      <div class="card lilac art"><div class="ph" data-img="persona-coo"></div></div>
     </div>
 
     <div class="persona fade" data-p="2">
@@ -566,7 +591,7 @@ b.k{font-weight:var(--fw-medium)}
           <li>A lakehouse or warehouse plan with a first usable data product and handover.</li>
         </ul>
       </div>
-      <div class="card lilac art"><div class="ph" data-img="persona-data"><b>PLACEHOLDER · Data / Analytics art</b><span>800×800 SVG or transparent PNG. Idea: stacked data layers (Bronze / Silver / Gold) or a lakehouse stack. Tezo palette only.</span></div></div>
+      <div class="card lilac art"><div class="ph" data-img="persona-data"></div></div>
     </div>
 
     <div class="persona fade" data-p="3">
@@ -579,7 +604,7 @@ b.k{font-weight:var(--fw-medium)}
           <li>AI evaluation, human review, monitoring and sign-off criteria for the chosen use case.</li>
         </ul>
       </div>
-      <div class="card lilac art"><div class="ph" data-img="persona-risk"><b>PLACEHOLDER · Risk / Security art</b><span>800×800 SVG or transparent PNG. Idea: a shield with a check, or a lock over layered controls. Tezo palette only.</span></div></div>
+      <div class="card lilac art"><div class="ph" data-img="persona-risk"></div></div>
     </div>
   </div>
 </section>
@@ -615,7 +640,7 @@ b.k{font-weight:var(--fw-medium)}
         </dl>
       </article>
       <article class="cap cap-ai fade">
-        <div class="ph" data-img="ai-icon" data-ext="gif"><b>PLACEHOLDER · AI icon</b><span>256×256 GIF</span></div>
+        <div class="ph" data-img="ai-icon" data-ext="gif"></div>
         <div>
           <h3>Where AI contributes</h3>
           <p>Customer and agent assistance, knowledge retrieval and workflow automation, connected to the applications and data they need. Evaluation, access controls and human escalation are part of the design.</p>
@@ -762,19 +787,19 @@ b.k{font-weight:var(--fw-medium)}
     <div class="why">
       <div class="card blue fade">
         <span class="idx">01</span>
-        <div class="ph on-dark" data-img="why-1"><b>PLACEHOLDER</b><span>Icon 192×192 SVG</span></div>
+        <div class="ph on-dark" data-img="why-1"></div>
         <h3>Product-building experience.</h3>
         <p>Our shared product-building heritage includes Keka. That experience shapes how we approach user workflows, release discipline, scale and the responsibility of running software.</p>
       </div>
       <div class="card lilac fade">
         <span class="idx">02</span>
-        <div class="ph" data-img="why-2"><b>PLACEHOLDER</b><span>Icon 192×192 SVG</span></div>
+        <div class="ph" data-img="why-2"></div>
         <h3>Engineering across system boundaries.</h3>
         <p>The client work connects core platforms, APIs, applications and data. We apply that experience to the interfaces and dependencies that determine whether a modernization effort works.</p>
       </div>
       <div class="card beige fade">
         <span class="idx">03</span>
-        <div class="ph" data-img="why-3"><b>PLACEHOLDER</b><span>Icon 192×192 SVG</span></div>
+        <div class="ph" data-img="why-3"></div>
         <h3>Delivery with an operating plan.</h3>
         <p>Release controls, service levels, runbooks and handover are part of the work described here. We define who owns the solution after launch, alongside what needs to be built.</p>
       </div>
@@ -787,12 +812,12 @@ b.k{font-weight:var(--fw-medium)}
   <div class="wrap">
     <div class="sec-head fade">
       <span class="eyebrow"><i></i>Starting point</span>
-      <h2>A conversation first. An assessment by agreement.</h2>
+      <h2 class="one-line">A conversation first. An assessment by agreement.</h2>
     </div>
     <div class="steps">
-      <div class="step fade"><span class="n">01</span><h3>Discuss the priority.</h3><p>Share the workflow, current constraints and the people involved. The introductory conversation helps establish whether a focused assessment is useful.</p></div>
-      <div class="step fade"><span class="n">02</span><h3>Agree the assessment.</h3><p>Confirm its scope, access requirements, deliverables, team, timing and fees before work begins. The assessment examines the systems and dependencies in that agreed scope.</p></div>
-      <div class="step fade"><span class="n">03</span><h3>Decide the first delivery.</h3><p>Review the findings, target design, backlog, measures and estimate. Agree any implementation as a separate commitment, with rollout and operational ownership defined.</p></div>
+      <div class="step fade"><div class="step-top"><span class="n">01</span><span class="track"></span></div><h3>Discuss the priority.</h3><p>Share the workflow, current constraints and the people involved. The introductory conversation helps establish whether a focused assessment is useful.</p></div>
+      <div class="step fade"><div class="step-top"><span class="n">02</span><span class="track"></span></div><h3>Agree the assessment.</h3><p>Confirm its scope, access requirements, deliverables, team, timing and fees before work begins. The assessment examines the systems and dependencies in that agreed scope.</p></div>
+      <div class="step fade"><div class="step-top"><span class="n">03</span><span class="track"></span></div><h3>Decide the first delivery.</h3><p>Review the findings, target design, backlog, measures and estimate. Agree any implementation as a separate commitment, with rollout and operational ownership defined.</p></div>
     </div>
     <div class="outputs fade">
       <b>Outputs of an agreed assessment</b>
@@ -826,7 +851,7 @@ b.k{font-weight:var(--fw-medium)}
       </div>
 
       <div class="cta-stage">
-        <div class="art"><div class="ph on-dark" data-img="cta-visual"><b>PLACEHOLDER · CTA visual</b><span>1200×800 WebP/PNG (like BloomFi's cta-bars-2x.webp). Idea: rising bars or soft gradient shapes in Lilac, Red and Beige on Black.</span></div></div>
+        <div class="art"><div class="ph on-dark" data-img="cta-visual"></div></div>
 
         <div class="cta-form" id="ctaForm" hidden>
           <form id="leadForm" novalidate
@@ -878,9 +903,10 @@ b.k{font-weight:var(--fw-medium)}
 
           <div class="f-done" id="formDone" hidden>
             <div class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
-            <h3>Thank you. We've got it.</h3>
-            <p>Your discussion agenda has been sent. A Tezo contact will follow up on your priority.</p>
-            <button type="button" class="btn btn-ghost" id="formAgain">Send another priority</button>
+            <h3>Request received.</h3>
+            <span class="done-ref" id="doneRef"></span>
+            <p>Your discussion agenda is with our team. A team member will contact you within 6&ndash;12 working hours to set up your introductory conversation.</p>
+            <div class="done-sign">Happy Modernizing!</div>
           </div>
         </div>
       </div>
@@ -1077,11 +1103,6 @@ b.k{font-weight:var(--fw-medium)}
   var EXTS=['svg','webp','png','gif','jpg','jpeg'];
   function loadInto(el){
     var name=el.getAttribute('data-img');if(!name)return;
-    if(el.classList.contains('ph')){
-      var f=document.createElement('span');f.className='fn';
-      f.textContent='images/'+name+'.'+(el.getAttribute('data-ext')||'svg (or .webp / .png / .jpg)');
-      el.appendChild(f);
-    }
     var i=0,list=el.getAttribute('data-ext')?[el.getAttribute('data-ext')]:EXTS;
     (function next(){
       if(i>=list.length)return;
@@ -1183,7 +1204,6 @@ b.k{font-weight:var(--fw-medium)}
   msg.addEventListener('input',function(){dirty=true});
   emailEl.addEventListener('input',clearEmailError);
   document.getElementById('formClose').addEventListener('click',function(){closeForm();sel.focus()});
-  document.getElementById('formAgain').addEventListener('click',function(){resetForm();closeForm();sel.focus()});
 
   /* Company emails only: block personal / free / disposable mailbox providers */
   var EMAIL_RE=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -1226,7 +1246,7 @@ b.k{font-weight:var(--fw-medium)}
     fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
       .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json().catch(function(){return {}})})
       .then(function(){
-        setStatus('');form.hidden=true;done.hidden=false;
+        setStatus('');document.getElementById('doneRef').textContent=sel.value;form.hidden=true;done.hidden=false;
         if(window.dataLayer)window.dataLayer.push({event:'tezo_form_submit',priority:sel.value});
       })
       .catch(function(){setStatus('Something went wrong. Please try again in a moment.',true);submitBtn.disabled=false});
